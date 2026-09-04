@@ -1,0 +1,14 @@
+const express = require('express');
+const controller = require('../controllers/admin.controller');
+const authenticate = require('../middlewares/authenticate');
+const authorize = require('../middlewares/authorize');
+const { param } = require('express-validator');
+const { validateRequest } = require('../validators/auth.validator');
+const analyticsController = require('../controllers/analytics.controller');
+const { analyticsQueryValidator } = require('../validators/analytics.validator');
+const router = express.Router();
+router.use(authenticate, authorize('admin'));
+router.get('/analytics/overview', analyticsQueryValidator, analyticsController.getOverview);
+router.get('/customers', controller.listCustomers);
+router.get('/customers/:id', param('id').isUUID(), validateRequest, controller.getCustomer);
+module.exports = router;

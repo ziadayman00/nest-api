@@ -1,0 +1,11 @@
+const express = require('express');
+const controller = require('../controllers/cart.controller');
+const authenticate = require('../middlewares/authenticate');
+const { addItemValidator, updateItemValidator, idValidator } = require('../validators/cart.validator');
+const router = express.Router();
+router.use(authenticate);
+router.get('/', controller.getCart);
+router.post('/items', addItemValidator, controller.addItem);
+router.patch('/items/:id', idValidator, updateItemValidator, controller.updateItem);
+router.delete('/items/:id', idValidator, controller.removeItem);
+module.exports = router;
