@@ -3,9 +3,8 @@ services:
     name: nest-api
     runtime: node
     plan: free
-    buildCommand: npm ci
-    preDeployCommand: npm run migrate
-    startCommand: npm start
+    buildCommand: npm ci --include=dev
+    startCommand: npm run migrate && npm start
     healthCheckPath: /health
     autoDeployTrigger: commit
     envVars:

@@ -18,7 +18,7 @@ https://app.example.com,https://admin.example.com
 
 ## Render Configuration
 
-The included Blueprint uses npm ci to build, npm run migrate before deployment, npm start to run the API, and /health as the health check.
+The included Blueprint uses npm ci --include=dev to build because Sequelize CLI runs migrations. On Render's free tier, pre-deploy commands are unavailable, so the start command runs npm run migrate && npm start. If a migration fails, the new deployment does not start.
 
 Render provides PORT automatically. Do not add a fixed production PORT value.
 
@@ -65,4 +65,4 @@ Do not use the demo password in a real production environment. Create a real adm
 
 ## Ongoing Deployments
 
-Each push to the configured branch triggers a deployment. Render runs migrations before starting the new app version. Review every new migration carefully: destructive schema changes need a staged migration plan, not a quick rollback.
+Each push to the configured branch triggers a deployment. The application runs migrations during startup on the free tier. Review every new migration carefully: destructive schema changes need a staged migration plan, not a quick rollback.
